@@ -1,6 +1,7 @@
 <?php
 use app\components\MenuWidget;
 use yii\helpers\Html;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 ?>
 <section id="slider"><!--slider-->
@@ -120,8 +121,8 @@ use yii\helpers\Html;
                                 <div class="productinfo text-center">
                                     <?= Html::img('@web/images/products/'.$hit->img, ['alt' => 'My logo']) ?>
                                     <h2>$<?=$hit->price?></h2>
-                                    <p><?=$hit->name?></p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                    <a href="<?=Url::to(['product/view', 'id' => $hit->id])?>"><p><?=$hit->name?></p></a>
+                                    <a href="<?=Url::to(['product/view', 'id' => $hit->id])?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                 </div>
 <!--                                <div class="product-overlay">
                                     <div class="overlay-content">

@@ -1,6 +1,8 @@
 <?php
 use app\components\MenuWidget;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\widgets\LinkPager;
 /* @var $this yii\web\View */
 ?>
 <section id="advertisement">
@@ -61,8 +63,8 @@ use yii\helpers\Html;
 									<div class="productinfo text-center">
 										<?= Html::img('@web/images/products/'.$product->img, ['alt' => '']) ?>
 										<h2>$<?=$product->price?></h2>
-										<p><?=$product->name?></p>
-										<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+										<a href="<?=Url::to(['product/view', 'id' => $product->id])?>"><p><?=$product->name?></p></a>
+										<a href="<?=Url::to(['product/view', 'id' => $product->id])?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 									</div>
 									<?php echo (($product->new === '1')?Html::img('@web/images/options/new.png', ['class' => 'new', 'alt' => 'новинка']):(($product->sale === '1')?Html::img('@web/images/options/sale.png', ['class' => 'new', 'alt' => 'распродажа']):'')); ?>
 								</div>
@@ -76,16 +78,14 @@ use yii\helpers\Html;
 						</div>
 						<?php $i++; echo (($i % 3 == 0)?'<div class="clearfix"></div>':'') ?>
 						<?php endforeach; ?>
+						<?php
+							echo '<div class="clearfix"></div>';
+							// display pagination
+							echo LinkPager::widget(['pagination' => $pages,]);
+						?>
 						<?php else:?>
 							<h2>К сожалению товара нет.</h2>
 						<?php endif; ?>
-						<?='<div class="clearfix"></div>'?>
-						<ul class="pagination">
-							<li class="active"><a href="">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href="">&raquo;</a></li>
-						</ul>
 					</div><!--features_items-->
 				</div>
 			</div>

@@ -10,6 +10,7 @@ namespace app\controllers;
 use yii;
 use app\models\Category;
 use app\models\Product;
+use yii\data\Pagination;
 
 class CategoryController extends AppController
 {
@@ -21,10 +22,20 @@ class CategoryController extends AppController
 
     public function actionView(){
         $id = Yii::$app->request->get('id');
-        $products = Product::find()->where(['=', 'category_id', $id])->all();
-        //$category = Category::find()->where(['=','id',$id])->limit(1)->all();
+
         $category = Category::findOne($id);
+        if (empty($category))
+            throw new \yii\web\HttpException(404, 'Такой категории нет');
+        
+        $products = Product::find()->where(['=', 'category_id', $id])->all();
+        $query = Product::find()->where(['=', 'category_id', $id]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 6, 'pageSizeParam' => false, 'forcePageParam' => false]);
+        //Количество продуктов на странице можно указать 'pageSize' => 3 как сверху или $pages->setPageSize(3) как с низу
+        //$pages->setPageSize(3);
+        $products = $query->offset($pages->offset)->limit($pages->limit)->all();
+
         $this->setMetaTag('E-Shoper | ' . $category->name, $category->keywords, $category->description);
-        return $this->render('view', compact('products', 'category'));
+        return $this->render('view', compact('products', 'category', 'pages'));
     }
 }
