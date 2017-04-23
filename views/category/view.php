@@ -1,5 +1,6 @@
 <?php
 use app\components\MenuWidget;
+use app\components\ProductWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
@@ -57,25 +58,7 @@ use yii\widgets\LinkPager;
 						<h2 class="title text-center"><?=$category->name?></h2>
 						<?php if (count($products)>0): ?>
 						<?php $i=0; foreach ($products as $product): ?>
-							<div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-									<div class="productinfo text-center">
-										<?= Html::img('@web/images/products/'.$product->img, ['alt' => '']) ?>
-										<h2>$<?=$product->price?></h2>
-										<a href="<?=Url::to(['product/view', 'id' => $product->id])?>"><p><?=$product->name?></p></a>
-										<a href="<?=Url::to(['product/view', 'id' => $product->id])?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-									</div>
-									<?php echo (($product->new === '1')?Html::img('@web/images/options/new.png', ['class' => 'new', 'alt' => 'новинка']):(($product->sale === '1')?Html::img('@web/images/options/sale.png', ['class' => 'new', 'alt' => 'распродажа']):'')); ?>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li><a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										<li><a href=""><i class="fa fa-plus-square"></i>Add to compare</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
+								<?= ProductWidget::widget(['style' => 'product', 'product'=> $product]) ?>
 						<?php $i++; echo (($i % 3 == 0)?'<div class="clearfix"></div>':'') ?>
 						<?php endforeach; ?>
 						<?php

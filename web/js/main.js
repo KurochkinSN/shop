@@ -6,6 +6,23 @@
 		speed:300
 	});
 
+	$('.add-to-cart').on('click',function (e) {
+		var id = $(this).data('id'); // получаем атрибуды текушего элемента
+		$.ajax({
+			url: '/cart/add',
+			data: {id: id},
+			type: 'GET',
+			success: function(res){
+				if (!res) alert('Ошибка');
+			},
+			error: function(){
+				alert('Ошибка');
+			}
+		})
+		//e.preventDefault(); //<- аналог return false. Отменяет стандартное поведение элемента
+		return false;
+	})
+
 	var RGBChange = function() {
 	  $('#RGB').css('background', 'rgb('+r.getValue()+','+g.getValue()+','+b.getValue()+')')
 	};	

@@ -2,6 +2,7 @@
 use app\components\MenuWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\components\ProductWidget
 /* @var $this yii\web\View */
 ?>
 <section id="slider"><!--slider-->
@@ -115,33 +116,7 @@ use yii\helpers\Url;
                 <div class="features_items"><!--features_items-->
                     <h2 class="title text-center">Features Items</h2>
                     <?php foreach ($hits as $hit):?>
-                    <div class="col-sm-4">
-                        <div class="product-image-wrapper">
-                            <div class="single-products">
-                                <div class="productinfo text-center">
-                                    <?= Html::img('@web/images/products/'.$hit->img, ['alt' => 'My logo']) ?>
-                                    <h2>$<?=$hit->price?></h2>
-                                    <a href="<?=Url::to(['product/view', 'id' => $hit->id])?>"><p><?=$hit->name?></p></a>
-                                    <a href="<?=Url::to(['product/view', 'id' => $hit->id])?>" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-<!--                                <div class="product-overlay">
-                                    <div class="overlay-content">
-                                        <h2>$<?/*=$hit->price*/?></h2>
-                                        <p><?/*=$hit->name*/?></p>
-                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                    </div>
-                                </div>-->
-                                <?php echo (($hit->new === '1')?Html::img('@web/images/options/new.png', ['class' => 'new', 'alt' => 'новинка']):(($hit->sale === '1')?Html::img('@web/images/options/sale.png', ['class' => 'new', 'alt' => 'распродажа']):'')); ?>
-                                <?php //Html::img('@web/images/options/new.png', ['class' => 'new']) ?>
-                            </div>
-                            <div class="choose">
-                                <ul class="nav nav-pills nav-justified">
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                    <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                        <?= ProductWidget::widget(['style' => 'product', 'product'=> $hit]) ?>
                     <?php endforeach; ?>
                 </div><!--features_items-->
                 <?php endif; ?>

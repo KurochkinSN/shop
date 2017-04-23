@@ -11,6 +11,7 @@ use yii;
 use app\models\Category;
 use app\models\Product;
 use yii\data\Pagination;
+use yii\helpers\Html;
 
 class CategoryController extends AppController
 {
@@ -37,5 +38,19 @@ class CategoryController extends AppController
 
         $this->setMetaTag('E-Shoper | ' . $category->name, $category->keywords, $category->description);
         return $this->render('view', compact('products', 'category', 'pages'));
+    }
+
+    public function actionSearch(){
+        $q = trim(Yii::$app->request->get('q'));
+        if (!$q) return $this->render('search', compact('products'));
+        //if (!empty($search))
+        {
+            $query = Product::find()->where(['like', 'name', $q]);
+            $countQuery = clone $query;
+            $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 3, 'pageSizeParam' => false, 'forcePageParam' => false]);
+            $products = $query->offset($pages->offset)->limit($pages->limit)->all();
+            $this->setMetaTag('E-Shoper | Поиск: '. Html::encode($q));
+            return $this->render('search', compact('products', 'pages', 'q'));
+        }
     }
 }

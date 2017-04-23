@@ -48,6 +48,7 @@ $config = [
             'rules' => [
                 'category/<id:\d+>/page/<page:\d+>' => 'category/view',
                 'category/<id:\d+>' => 'category/view',
+                'search' => 'category/search',
                 'product/<id:\d+>' => 'product/view',
                 '/' => 'category/index',
             ],
