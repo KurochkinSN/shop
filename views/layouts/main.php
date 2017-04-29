@@ -5,7 +5,9 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
+use yii\bootstrap\Modal;
 use yii\bootstrap\NavBar;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 use app\assets\ltAppAsset;
@@ -97,7 +99,7 @@ ltAppAsset::register($this);
                             <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                            <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                            <li><a href="#" onclick="return GetCart()"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                             <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                         </ul>
                     </div>
@@ -313,7 +315,22 @@ ltAppAsset::register($this);
 
 </footer><!--/Footer-->
 
+<?php
+Modal::begin([
+'id' => 'cart',
+'header' => '<h2>Корзина</h2>',
+'size' => 'modal-lg',
+'footer' => '
+    <button type="button" class="btn btn-default" data-dismiss="modal">Продолжить покупки</button>
+    <a href="'. Url::to(['cart/view']).'" class="btn btn-success">Оформить заказ</a>
+    <button type="button" class="btn btn-danger" onClick="clearCart()">Очистить карзину</button>
+    ',
+]);
 
+echo 'Say hello...';
+
+Modal::end();
+?>
 
 <?php $this->endBody() ?>
 </body>

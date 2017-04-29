@@ -6,17 +6,70 @@
 		speed:300
 	});
 
-	$('.add-to-cart').on('click',function (e) {
-		var id = $(this).data('id'); // получаем атрибуды текушего элемента
+	function ShowCart(cart){
+		$('#cart .modal-body').html(cart);
+		$('#cart').modal();
+	}
+
+	function clearCart(){
 		$.ajax({
-			url: '/cart/add',
+			url: '/cart/clear',
+			type: 'GET',
+			success: function(res){
+				if (!res) alert('Ошибка');
+				ShowCart(res);
+			},
+			error: function(){
+				//alert('Ошибка');
+			}
+		})
+		//$('#cart').modal('hide');
+	}
+
+	function GetCart() {
+		$.ajax({
+			url: '/cart/show',
+			type: 'GET',
+			success: function(res){
+				if (!res) alert('Ошибка');
+				ShowCart(res);
+			},
+			error: function(){
+				alert('Ошибка');
+			}
+		})
+		return false;
+	}
+
+	$('#cart .modal-body').on('click', '.del-item', function () {
+		var id = $(this).data('id');
+		$.ajax({
+			url: '/cart/del-item',
 			data: {id: id},
 			type: 'GET',
 			success: function(res){
 				if (!res) alert('Ошибка');
+				ShowCart(res);
 			},
 			error: function(){
 				alert('Ошибка');
+			}
+		})
+	});
+
+	$('.add-to-cart').on('click',function (e) {
+		var id = $(this).data('id'); // получаем атрибуды текушего элемента
+		var qty = $('#qty').val();
+		$.ajax({
+			url: '/cart/add',
+			data: {id: id, qty: qty},
+			type: 'GET',
+			success: function(res){
+				if (!res) alert('Ошибка!')
+				ShowCart(res);
+			},
+			error: function(){
+				alert('Ошибка!!');
 			}
 		})
 		//e.preventDefault(); //<- аналог return false. Отменяет стандартное поведение элемента

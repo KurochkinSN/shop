@@ -778,6 +778,9 @@ ul.category-products{
   padding-top: 15px;
 }
 
+.del-item{
+  cursor: pointer;
+}
 
 .brands-name .nav-stacked li a {
   background-color: #FFFFFF;

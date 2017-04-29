@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 ?>
-<?php if (empty($session)): ?>
+<?php if (empty($session['cart'])): ?>
     <h3>Корзина пуста</h3>
 <?php else:?>
     <div class="table-responsive">
@@ -14,13 +14,13 @@ use yii\helpers\Url;
                 <th>Цена</th>
                 <th><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></th>
             </tr>
-            <?php foreach ($session['cart'] AS $product): ?>
+            <?php foreach ($session['cart'] AS $id => $product): ?>
                 <tr>
-                    <td><?=Html::img('@web/images/products/'. $product['img'], ['alt' => "{$product['name']}"]) ?></td>
+                    <td><?=Html::img('@web/images/products/'. $product['img'], ['alt' => "{$product['name']}", "height" => 50]) ?></td>
                     <td><?=$product['name']?></td>
                     <td><?=$product['qty']?></td>
                     <td><?=$product['price']?></td>
-                    <td><span class="glyphicon glyphicon-remove text-danger del-item" aria-hidden="true"></span></td>
+                    <td><span class="glyphicon glyphicon-remove text-danger del-item" data-id="<?=$id?>" aria-hidden="true"></span></td>
                 </tr>
             <?php endforeach; ?>
             <tr>
