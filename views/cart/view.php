@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
                 <?php foreach ($session['cart'] AS $id => $product): ?>
                     <tr>
                         <td><?=Html::img('@web/images/products/'. $product['img'], ['alt' => "{$product['name']}", "height" => 50]) ?></td>
-                        <td><a href="<?=Url::to(['product/view', 'id' => $id])?>"></a><?=$product['name']?></td>
+                        <td><a href="<?=Url::to(['product/view', 'id' => $id])?>"><?=$product['name']?></a></td>
                         <td><?=$product['qty']?></td>
                         <td><?=$product['price']?></td>
                         <td><?=$product['price'] * $product['qty']?></td>
